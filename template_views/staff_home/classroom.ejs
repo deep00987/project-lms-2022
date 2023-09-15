@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script defer src="https://use.fontawesome.com/releases/v6.1.1/js/all.js" integrity="sha384-xBXmu0dk1bEoiwd71wOonQLyH+VpgR1XcDH3rtxrLww5ajNTuMvBdL5SOiFZnNdp" crossorigin="anonymous"></script>
+    <link rel = "stylesheet" href = "/css/template_styles/staff_classroom.css">
+</head>
+<body>
+
+   <%- include('partials/header.ejs') %>
+
+  <!-- Main data container -->
+  <section class = "dashboard__container">
+    <div class="dash__board" >
+
+      <div class = "dash__c0">
+        <div class="data_row_header">
+          <h2><%= data.class_room_info[0].course_name %></h2>
+          <h4>Class Name: <%= data.class_room_info[0].class_name %></h4> 
+          <h4>Instructer: <%= data.teacher_info[0].fname %> <%= data.teacher_info[0].lname %></h4>
+        </div>
+        <div class = "data_row_0">
+         
+          <!-- <div class = "data_1_item data_1_2">
+            <% console.log("test",data.teacher_info[0].fname) %>
+            <p>Teacher Name: <%= data.teacher_info[0].fname %> <%= data.teacher_info[0].lname %></p>            
+            <p>Department: <%= data.teacher_info[0].dept_name %></p>
+          </div>
+          <div class = "data_1_item data_1_3">
+            <p>Class Name: <%= data.class_room_info[0].class_name %></p>            
+            <p>Subject: <%= data.class_room_info[0].course_name %></p>
+            <p>Course code: <%= data.class_room_info[0].course_code %></p>
+          </div> -->
+        </div> 
+      </div>  
+
+
+    
+
+
+      <div class = "dash__c2">
+         <div class = "post_form_placeholder">
+            <button class="post_placeholder_btn">Post content <i class="fa-solid fa-circle-chevron-down post_btn_icon_down"></i><i class="fa-solid fa-circle-chevron-up post_btn_icon_up hidden"></i></button>
+         </div>
+
+         <div class = "class_post_form hidden">
+          <form action = '/upload_content' method = "POST" class = "post_form" enctype="multipart/form-data">
+            <label for="title">Post something</label>
+            <input type="text" id="post_title" name="title" placeholder="post Something" required>
+            
+            <select id="classroom_id" name = "classroom_id">
+              <option value="<%= data.class_room_info[0].class_room_id%>"><%= data.class_room_info[0].class_room_id %></option>  
+            </select>
+
+            <label for="attachment">Attachment</label>
+            <input type="file" id="post_attachment" name="attachment" accept=".doc,.docx,.pdf">
+
+            <input type = "submit" name = "submit_post_data" class = "form_post_btn">
+          </form>
+         </div> 
+        
+      </div> 
+
+      <div class = 'dash__c2'>
+        <h3>Class contents</h3>
+        <div class = "data_row_post">
+          <% data?.class_room_posts.forEach(post =>{ %>
+            <div class = "test">
+              <div class = "data_post_item ">
+                <!-- header -->
+                <div class = "data_post_header">
+                  <div class = "data_post_owner_image">
+                    <img class = "post_profile_dp" src = "/img/img_avatar.png"/>
+                  </div>
+                  <div class= "post_owner_info">
+                    <div class = "data_post_owner">
+                      <p><b>Posted by: <%= post?.fname %> <%= post?.lname %></b></p>
+                    </div>
+                    <div class = "data_post_time">
+                      <% 
+                        const dateStr = post?.created_at 
+                        let date = new Date(dateStr).toLocaleDateString('en-IN')
+                        let time1 = new Date(dateStr).toLocaleTimeString('en-IN').substring(0,4)
+                        let time2 = new Date(dateStr).toLocaleTimeString('en-IN').substring(8)
+                        console.log(time1, time2)
+                      %>
+                      <p><i class="fa-solid fa-clock"></i> <%= date %>, <%= time1 %> <%= time2 %></p>
+                    </div> 
+                  </div>
+                  
+                </div>
+                <hr>
+                <div class="data_post_content">
+                  <div>
+                    <p><%= post.content %></p>
+                  </div>
+                  <% if(post.attachment) { %>
+                    
+                    <div class = "data_post_attachment">
+                      <p><i class="fa-solid fa-paperclip icon"></i> Attachment:--  </p>
+                      <a href = "http://localhost:8080/class_room/<%= post.attachment %>" ><%= post.attachment %></a>
+                    </div> 
+
+                  <% } %>
+                  
+                </div>
+                
+              </div>
+
+
+              <% if(post?.post_comments.length > 0) { %>
+                <div class = "data_comment_placeholder">
+                  class comments ....
+                </div>
+  
+                <% post?.post_comments.forEach(item => { %>
+                
+                  <div class = "data_comment_item">
+                    <div class="data_comment_box">
+                      <div class = "data_post_header">
+                        <div class = "data_post_owner_image">
+                          <img class = "post_profile_dp" src = "/img/img_avatar.png"/>
+                        </div>
+                        <div class= "post_owner_info">
+                          <div class = "data_post_owner">
+                            <p><b>Posted by: <%= item?.fname %> <%= item?.lname %></b></p>
+                          </div>
+                          <div class = "data_post_time">
+                            <% 
+                              const dateStr = item?.created_at 
+                              let date = new Date(dateStr).toLocaleDateString('en-IN')
+                              let time1 = new Date(dateStr).toLocaleTimeString('en-IN').substring(0,4)
+                              let time2 = new Date(dateStr).toLocaleTimeString('en-IN').substring(8)
+                              console.log(time1, time2)
+                            %>
+                            <p><i class="fa-solid fa-clock"></i> <%= date %>, <%= time1 %> <%= time2 %></p>
+                          </div> 
+                        </div>
+                        
+                      </div>
+                      <hr>
+                      <div class="data_post_content" style="margin-top: 0;">
+                        <div>
+                          <p><%= item.content %></p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+    
+                <% }) %>
+  
+              <% } %>
+
+
+              <div class = " post_comment_wrapper" data_room_id = "<%= post?.class_room_id %>" data_post_id = "<%= post?.class_post_id %>">
+                <div class="wrap">
+                  <div class = "comment_dp">
+                    <img class = "post_profile_dp" src = "/img/img_avatar.png"/>
+                  </div>
+                  <div class="comment">
+                    <input type="text" class="commentTerm" placeholder="Comment something..." required>
+                    <button type="submit" class="commentButton">
+                      Post <i class="fa-solid fa-circle-chevron-right"></i>
+                    </button>
+                  </div>
+              </div>   
+              </div>
+            </div>
+            
+          <% }) %>
+        </div> 
+
+      </div>
+
+
+
+    </div>
+  </section>
+
+
+  
+
+  <h3>Protected route</h3>
+
+  <div class = "student__data__new">
+
+  </div>
+
+  
+  <script>
+
+    const util = document.querySelectorAll('.test')
+
+    util.forEach(item =>{
+      item.addEventListener('click' , processComment.bind())
+    })
+
+    function logoutStaff(){
+      
+      
+      //e.preventDefalut()
+      fetch("http://localhost:5500/api/auth/staff/logout")
+      .then(response=>response.json())
+      .then(data=>{
+        console.log(data)
+        window.location.href = "/staff/login"
+      }) 
+    }
+    
+    //const post_class_content = document.querySelector('.form_post_btn')
+    //post_class_content.addEventListener('click', postClassContent.bind())
+
+    document.querySelector('.post_placeholder_btn').addEventListener('click', function(e){
+      document.querySelector('.class_post_form').classList.toggle('hidden')
+      document.querySelector('.post_btn_icon_down').classList.toggle('hidden')
+      document.querySelector('.post_btn_icon_up').classList.toggle('hidden')
+      
+    })
+
+    function processComment(e){
+      const class_room_id = e.target.closest(".post_comment_wrapper").getAttribute('data_room_id')
+      const class_post_id = e.target.closest(".post_comment_wrapper").getAttribute('data_post_id')
+      let content
+      if(e.target.classList.contains('commentButton')){
+        content = e.currentTarget.querySelector('.commentTerm').value
+
+        if(!content){
+          alert("fill out the form to post")
+          return
+        }
+
+        let data = {class_post_id,class_room_id, content}
+        console.log(data)
+        fetch('http://localhost:5500/api/staff/class/post_comment',{
+          method:'POST',
+          headers: {
+            'content-type' : 'application/json'
+          },
+          body: JSON.stringify(data)
+        }).then(response =>response.json())
+        .then(data =>{
+          console.log(data)
+          alert(data.msg)
+          window.location.reload()
+        })
+
+        console.log(class_room_id, class_post_id, content)
+      }
+
+    }
+
+    
+
+  </script>
+    
+</body>
+</html>

@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="csrf-token" content="<%= data?.CSRF_TOKEN %>">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp">
+  <link rel="stylesheet" href="/dev_v2/Dashboard_student/style.css">
+  <title>Document</title>
+
+  <link defer href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+  <script defer src="https://use.fontawesome.com/releases/v6.1.1/js/all.js" integrity="sha384-xBXmu0dk1bEoiwd71wOonQLyH+VpgR1XcDH3rtxrLww5ajNTuMvBdL5SOiFZnNdp" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+  <header class="site__header">
+    
+  </header>
+  <%
+    const dept = {
+      "CS": "Computer Science",
+      "MATH": "MATHAMETICS",
+    }
+  %>
+  <div class="dashboard__container">
+    <div class = "sidebar__wrapper">
+      <sidebar class="sidebar-menu">
+        <!-- top logo -->
+        <div class="top">
+          <div class="logo">
+            <!-- <img src="./img/img_avatar.png" alt="loading"> -->
+            <h2>LMS<span class="logo-name"> Application</span></h2>
+          </div>
+          
+        </div>
+
+        <div class="top">
+          <div class="logo">
+            <img src="/_static_/<%= data?.student_info[0]?.dp_path %>" alt="loading">
+            <!-- <h2>FIM<span class="logo-name">whatever</span></h2> -->
+          </div>
+          <div class="profile_info">
+            <h5><%= data?.student_info[0]?.fname %> <%= data?.student_info[0]?.lname %></h5>
+          </div>
+        </div>
+
+        <div class="sidebar">
+          <a href="/development/student/home" class="active">
+            <span class="material-icons-sharp">home</span>
+            <h3>Dashboard</h3>
+          </a>
+          <a href="/development/student/classes">
+            <span class="material-icons-sharp">class</span>
+            <h3>Classes</h3>
+          </a>
+          <a href="/development/student/courses">
+            <span class="material-icons-sharp">auto_stories</span>
+            <h3>Courses</h3>
+          </a>
+          <a href="/development/student/addmission">
+            <span class="material-icons-sharp">add_circle</span>
+            <h3>Addmission</h3>
+          </a>
+          <a href="/development/student/profile">
+            <span class="material-icons-sharp">person_pin</span>
+            <h3>Profile</h3>
+          </a>
+          <a href="#" class = "logout__btn">
+            <span class="material-icons-sharp">logout</span>
+            <h3>Logout</h3>
+          </a>
+        </div>
+      </sidebar>
+    </div>  
+
+    <main>
+      <!--<h2>header test 1</h2>-->
+
+      <div class="insights">
+        <div class="insight-1">
+          <div class="icon__content">
+            <span class="material-icons-sharp">account_circle</span>
+          </div>
+          <div class="middle">
+            <div class="left">
+              <!-- user name -->
+              
+              <h2><%= data?.student_info[0]?.fname %> <%= data?.student_info[0]?.lname %></h2>
+              <!-- user eamil -->
+              <h3><%= data?.student_info[0]?.email %></h3>
+              <!-- dept name  -->
+            </div>
+          </div>
+        </div>
+
+        <div class="insight-2">
+          <div class="icon__content">
+            <span class="material-icons-sharp">school</span>
+          </div>
+          <div class="middle">
+            <div class="left">
+              <!-- department info -->
+              <h2><%= dept[data?.student_info[0]?.dept_name] %></h2>
+              <h2><%= data?.student_info[0]?.term_name %></h2>
+            </div>
+          </div>
+        </div>
+
+        <div class="insight-3">
+          <div class="icon__content">
+            <span class="material-icons-sharp">auto_stories</span>
+          </div>
+          <div class="middle">
+            <div class="left">
+              <div class="card__content__1"> 
+                <h2>Courses joined<i class="fa-solid fa-caret-right"></i></h2>
+                <%
+                  let joined_courses = 0; 
+                  data?.courses_enrolled?.forEach(item => {joined_courses++})
+                %>
+                <h2><%= joined_courses %></h2>                
+              </div>
+              <h3>You have enrolled in <%= joined_courses %> courses</h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="insight-4">
+          <div class="icon__content">
+            <span class="material-icons-sharp">event_note</span>
+          </div>
+          <div class="middle">
+            <div class="left">
+              <div class="card__content__1">
+                <%
+                  let joined_classes = 0; 
+                  data?.class_rooms_joined?.forEach(item => {joined_classes++})
+                %> 
+                <h2>Classes joined<i class="fa-solid fa-caret-right"></i></h2>
+                <h2><%= joined_classes %></h2>                
+              </div>
+              <h3>You have enrolled in <%= joined_classes %> classes</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="activities">
+        <!--<h2>Activities</h2>-->
+        <div class="activity__1">
+          <div class="activity__1__header">
+            <h5>Routine for Classes enrolled</h5>
+          </div>
+          
+          <div class="activity__1__body">
+            <div class="accordion" id="accordion__table__info" data-id = "1">
+
+              <% for(let i = 0; i < 6; i++){ %> 
+                <%= console.log(data?.routine[i]) %>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="heading__<%= i %>">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse__<%= i %>" aria-expanded="true" aria-controls="collapse__<%= i %>">
+                      <%
+                        let p1 = data?.routine[i]?.day.charAt(0)
+                        let p2 = data?.routine[i]?.day.slice(1).toLowerCase()
+                        let res = p1 + p2
+                      %> 
+                      <%=  res  %>
+                    </button>
+                  </h2>
+                  <div id="collapse__<%= i %>" class="accordion-collapse collapse" aria-labelledby="heading__<%= i %>" data-bs-parent="#accordion__table__info">
+                    <div class="accordion-body">
+                      <!-- //dynamic  -->
+                      <div class="content_wrapper">
+
+                        <% data?.routine[i]?.classes.forEach(class_item => { %> 
+                        
+                        
+                          <div class="classes_student_wrapper">
+                            <div class="classes_student_header">
+                              <div class="header_icon">
+                                <span class="material-icons-sharp">
+                                  alarm
+                                  </span>
+                              </div>
+                              <div class="header__content">
+                                <h3>TIME: <%= class_item?.time %></h3> 
+                              </div>
+                            </div>
+                            <div class="classes_student_body">
+                              <div class="classes_student_content">
+                                <div class="content__icon">
+                                  <span class="material-icons-sharp md-48">auto_stories</span>
+                                </div>
+                                <div class="content__sub__group">
+                                  <div class="content__owner__info">
+                                    <h3 style="font-size: 1rem !important;">Subject: <%= class_item?.class?.course_name %></h3>
+                                  </div>
+                                  <div class="content__body">
+                                    <h3 style="font-size: 1rem !important;">Subject code: <%= class_item?.class?.course_code %></h3>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                      
+
+                      <% }) %>
+
+                      </div>
+                      
+                      
+  
+                    </div>
+                  </div>
+                </div>
+
+              <% } %>
+
+            </div>
+          </div>
+          
+        </div>
+        <div class="activity__2">
+          <div class="activity__2__wrapper">
+            <div class="activity__2__header">
+              <h5>Notifications</h5>
+            </div>
+            <!-- load content dynamically from here -->
+            <div class="activity__2__body">
+              
+              <% if(data?.notifications.length === 0 ){ %>
+
+                <div class="activity__2__content">
+                  <h3>Nothing to show ...</h3>
+                </div>
+
+              <% } else { %> 
+
+                <%
+                  data?.notifications.sort( (a,b) => {return  new Date(b.created_at) - new Date(a.created_at) })
+                  console.log("sorted__post_arr")
+                %>
+
+                <% if(data?.notifications.length <= 5){ %> 
+
+                  <% data?.notifications.forEach(item => { %> 
+
+                    <div class="activity__2__content">
+                
+                      <div class="content_group">
+                        <div class="content__owner__img">
+                          <img src = "/_static_/<%= item?.dp_path %>" style = "width:60px; height:60px; border-radius: 50px;">
+                        </div>
+                        <div class="content__sub__group">
+                          <div class="content__owner__info">
+                              <%
+                                let dateTime = new Date(item?.created_at).toLocaleString("en-IN")
+                                let date_part_1 = dateTime.slice(0, dateTime.length - 6)
+                                let date_part_2 = dateTime.slice(-3)
+                                let result__date = date_part_1 + date_part_2
+                              %>
+                            <div style = "padding-bottom: 0.25rem;">
+                              <i class="fa-regular fa-bell"></i> <%= item?.fname.toUpperCase() %> <%= item?.lname.toUpperCase() %></i>, <%= result__date %> 
+                            </div>
+                          </div>
+                          <div class="content__body">
+                            <b><h3><%= item?.content %></h3></b>
+                          </div>
+                          <div class="content__body">
+                            <%
+                              let content_str;
+                              if(item?.post_content.length > 30){
+                                content_str = item?.post_content.slice(0, 30) + ` ...`
+                              }else{
+                                content_str =  item?.post_content
+                              }
+                            %>
+
+                            <b>Content: </b> <%= content_str %>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="owner_contact">
+                        <a href="/development/student/classroom/<%= item?.class_room_id %>">
+                          <span class="material-icons-sharp">send</span>
+                        </a>
+                      </div>
+      
+                      
+                    </div>
+                    
+                    
+                  <% }) %>
+                  
+                <% }else{ %> 
+                  
+                  <% for(let i = 0; i < 5; i++){ %> 
+                    
+                    <div class="activity__2__content">
+                
+                      <div class="content_group">
+                        <div class="content__owner__img">
+                          <img src = "/_static_/<%= data?.notifications[i]?.dp_path %>" style = "width:60px; height:60px; border-radius: 50px;">
+                        </div>
+                        <div class="content__sub__group">
+                          <div class="content__owner__info">
+                            <%
+                            let dateTime = new Date(data?.notifications[i]?.created_at).toLocaleString("en-IN")
+                            let date_part_1 = dateTime.slice(0, dateTime.length - 6)
+                            let date_part_2 = dateTime.slice(-3)
+                            let result__date = date_part_1 + date_part_2
+                          %>
+                            <div style = "padding-bottom: 0.25rem;">
+                              <i class="fa-regular fa-bell"></i> <%= data?.notifications[i]?.fname.toUpperCase() %> <%= data?.notifications[i]?.lname.toUpperCase() %></i>, <%= result__date %> 
+                            </div>
+                          </div>
+                          <div class="content__body">
+                            <b><h3><%= data?.notifications[i]?.content %></h3></b>
+                          </div>
+                          <div class="content__body">
+                            <%
+                              let content_str;
+                              if(data?.notifications[i]?.post_content.length > 30){
+                                content_str = data?.notifications[i]?.post_content.slice(0, 30) + ` ...`
+                              }else{
+                                content_str =  data?.notifications[i]?.post_content
+                              }
+                            %>
+
+                            <b>Content: </b> <%= content_str %>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="owner_contact">
+                        <a href="/development/student/classroom/<%= data?.notifications[i]?.class_room_id %>">
+                          <span class="material-icons-sharp">send</span>
+                        </a>
+                      </div>
+      
+                      
+                    </div>
+                  
+                  <% } %>
+                
+                <% } %>
+                
+              <% } %>
+
+
+              
+              
+              
+              
+
+              
+              
+            </div>
+          </div>
+            
+        </div>
+      </div>
+    </main>
+
+    
+
+
+
+
+  </div>
+  <script>
+    let html = ``
+    const element = document.getElementById('accordion__table__info')
+    
+    const logout__btn = document.querySelector(".logout__btn")
+    logout__btn.addEventListener("click", processLogout.bind())
+
+    function processLogout(e){
+      console.log(e.target)
+
+      fetch("/api/auth/logout")
+      .then(response=>response.json())
+      .then(data=>{
+        console.log(data)
+        window.location.href = "/login"
+      })
+
+
+    }
+
+  </script>
+</body>
+
+</html>

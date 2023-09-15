@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="csrf-token" content = "<%= data?.CSRF_TOKEN %>">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp">
+  <link rel="stylesheet" href="/dev_v2/Profile_teacher/style.css">
+  <title>Document</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+  <script defer src="https://use.fontawesome.com/releases/v6.1.1/js/all.js" integrity="sha384-xBXmu0dk1bEoiwd71wOonQLyH+VpgR1XcDH3rtxrLww5ajNTuMvBdL5SOiFZnNdp" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+</head>
+
+<body>
+  <header class="site__header">
+    
+  </header>
+  <%
+    const dept = {
+      "CS": "Computer Science",
+      "MATH": "MATHAMETICS",
+    }
+  %>
+  <div class="dashboard__container">
+    <div class = "sidebar__wrapper">
+      <sidebar class="sidebar-menu">
+        <!-- top logo -->
+        <div class="top">
+          <div class="logo">
+            <!-- <img src="./img/img_avatar.png" alt="loading"> -->
+            <h2>LMS<span class="logo-name"> Application</span></h2>
+          </div>
+          
+        </div>
+
+        <div class="top">
+          <div class="logo">
+            <img src="/_static_/<%= data?.teacher_info[0]?.dp_path %>" alt="loading">
+            <!-- <h2>FIM<span class="logo-name">whatever</span></h2> -->
+          </div>
+          <div class="profile_info">
+            <h5><%= data?.teacher_info[0]?.fname %> <%= data?.teacher_info[0]?.lname %></h5>
+          </div>
+        </div>
+
+        <div class="sidebar">
+          <a href="/development/teacher/home" class="active">
+            <span class="material-icons-sharp">home</span>
+            <h3>Dashboard</h3>
+          </a>
+          <a href="/development/teacher/classes">
+            <span class="material-icons-sharp">class</span>
+            <h3>Classes</h3>
+          </a>
+          <a href="/development/teacher/courses">
+            <span class="material-icons-sharp">auto_stories</span>
+            <h3>Courses</h3>
+          </a>
+          <a href="/development/teacher/addmission">
+            <span class="material-icons-sharp">add_circle</span>
+            <h3>Addmission</h3>
+          </a>
+          <a href="/development/teacher/profile">
+            <span class="material-icons-sharp">person_pin</span>
+            <h3>Profile</h3>
+          </a>
+          <a href="#" class = "logout__btn">
+            <span class="material-icons-sharp">logout</span>
+            <h3>Logout</h3>
+          </a>
+        </div>
+      </sidebar>
+    </div>  
+
+    <main>
+      <!--<h2>header test 1</h2>-->
+
+      
+      <div class="insights">
+        <div class="insight-1">
+          <div class="icon__content">
+            <span class="material-icons-sharp">account_circle</span>
+          </div>
+          <div class="middle">
+            <div class="left">
+              <!-- user name -->
+              <h2><%= data?.teacher_info[0]?.fname %> <%= data?.teacher_info[0]?.lname %></h2>
+              <!-- user eamil -->
+              <h3><%= data?.teacher_info[0]?.email %></h3>
+              <!-- dept name  -->
+            </div>
+          </div>
+        </div>
+
+        <div class="insight-2">
+          <div class="icon__content">
+            <span class="material-icons-sharp">school</span>
+          </div>
+          <div class="middle">
+            <div class="left">
+              <!-- department info -->
+              <h2><%= dept[data?.teacher_info[0].dept_name] %></h2>
+              <div class="card__content__1"> 
+                <h3>Department ID<i class="fa-solid fa-caret-right"></i></h3>
+                <h2><%= data?.teacher_info[0].dept_id %></h2>                
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="insight-3">
+          <div class="icon__content">
+            <span class="material-icons-sharp">auto_stories</span>
+          </div>
+          <div class="middle">
+            <div class="left">
+              <div class="card__content__1"> 
+                <h2>Your Courses<i class="fa-solid fa-caret-right"></i></h2>
+                <%
+                  let joined_courses = 0; 
+                  data?.courses_teaching?.forEach(item => {joined_courses++})
+                %> 
+                <h2><%= joined_courses %></h2>                 
+              </div>
+              <h3>You are teaching <%= joined_courses %> courses</h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="insight-4">
+          <div class="icon__content">
+            <span class="material-icons-sharp">event_note</span>
+          </div>
+          <div class="middle">
+            <div class="left">
+              <div class="card__content__1"> 
+                <h2>Classes created<i class="fa-solid fa-caret-right"></i></h2>
+                <%
+                  let classes_created = 0; 
+                  data?.class_rooms_created?.forEach(item => {classes_created++})
+                %> 
+                <h2><%= classes_created %></h2>                    
+              </div>
+              <h3>You have created <%= classes_created %> classes</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="activities">
+        <!--<h2>Activities</h2>-->
+        
+        <div class="activity__1">
+          <div class="activity__1__header">
+            <h5>Profile</h5>
+          </div>
+          
+          <div class="activity__1__body">
+            <div class="addmission_form_wapper">
+              <div class="info__wrapper"> 
+                <div class="image__upload__form" style="border: 2px solid rgba(172, 172, 172, 0.459);">
+                  <div class="col-lg-12 px-1 py-1"  >
+                    
+                   
+                    <!-- Upload image input-->
+                    <div class="header__img_upload" style = "border-bottom:2px solid rgba(172, 172, 172, 0.459) ; margin-bottom: 1rem;">
+                      <p class = "img_form_header">Change Disaply Image</p>
+                    </div>
+
+                    <form action="/upload_teacher_profile_img" method = "POST" enctype='multipart/form-data' >
+                      <div class="input-group rounded-pill bg-white shadow-sm" style = "border: 1px solid #333">
+                        <input type="hidden" name="_csrf" value="<%= data?.CSRF_TOKEN %>">
+                        <input id="upload" type="file" onchange="readURL(this);" name = "uploaded_image" class="form-control border-0 upload_img_dp" accept="image/*" required>
+                        <label id="upload-label" for="upload" class="font-weight-light text-muted">Choose file</label>
+                        <div class="input-group-append">
+                          <label for="upload" class="btn btn-light m-0 rounded-pill px-4"> <i
+                              class="fa fa-cloud-upload mr-2 text-muted"></i><small
+                              class="text-uppercase font-weight-bold text-muted">Choose file</small></label>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-12 px-1 py-1">
+                        <p class="font-italic text-center" style="color: #333;">The image uploaded will be rendered inside the box below.</p>
+                        <div class="image-area">
+                          <p class = "text_img_header">IMAGE CONTENT</p>
+                          <img id="imageResult" src="#" alt="" class="img-fluid d-block" style = "max-width: 150px;max-height: 150px;"/>
+                          <h3 class = "text_img_info"></h3>
+                        </div>
+                      </div>
+                      <div class="img_form_submit">
+                        <button type = "submit" class = "btn btn-primary btn-custom btn__img__submit"> Submit Selection</button>
+                      </div>
+
+                    </form>
+
+                    
+              
+                    <!-- Uploaded image area-->
+                    
+              
+                  </div>
+                  
+
+                </div>
+
+                <div class="image__upload__form" style="border: 2px solid rgba(172, 172, 172, 0.459);">
+                  <div class="col-lg-12 px-1 py-1"  >
+              
+                    <!-- Upload image input-->
+                    <div class="header__img_upload" style = "border-bottom:2px solid rgba(172, 172, 172, 0.459) ; margin-bottom: 1rem;">
+                      <p class = "img_form_header">Change Email</p>
+                    </div>
+                    <div class="form-group">
+                      <label for="email_change">New Email address</label>
+                      <input type="email" class="form-control" id="email_change" aria-describedby="emailHelp" placeholder="Enter email" required>
+                      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                    </div>
+              
+                    <!-- Uploaded image area-->
+                     
+                  </div>
+                  
+                  <div class="img_form_submit">
+                    <button class = "btn btn-primary btn-custom btn__update__email"> Change Email</button>
+                  </div>
+
+                </div>
+
+                <div class="image__upload__form" style="border: 2px solid rgba(172, 172, 172, 0.459); grid-column-start: 1;grid-column-end: 3;">
+                  <div class="col-lg-12 px-1 py-1"  >
+              
+                    
+                    <div class="header__img_upload" style = "border-bottom:2px solid rgba(172, 172, 172, 0.459) ; margin-bottom: 1rem;">
+                      <p class = "img_form_header">Change Password</p>
+                    </div>
+                    <div class="form-group">
+                      <label for="pass_1_change">New Password</label>
+                      <input type="text" class="form-control" id="pass_1_change" aria-describedby="emailHelp" placeholder="Enter New Password">
+                     
+                    </div>
+                    <div class="form-group">
+                      <label for="pass_2_change">Repeat password</label>
+                      <input type="text" class="form-control" id="pass_2_change" aria-describedby="emailHelp" placeholder="Repeat New Password">
+                     
+                    </div>
+              
+                    
+                     
+                  </div>
+                  
+                  <div class="img_form_submit">
+                    <button class = "btn btn-primary btn-custom change__passwd__btn"> Change Password</button>
+                  </div>
+
+                </div>
+
+                
+              </div>
+            
+            </div>
+          </div>
+          
+        </div>
+
+
+        <div class="activity__2">
+          <div class="activity__2__wrapper">
+            <div class="activity__2__header">
+              <h5>Courses teaching</h5>
+            </div>
+            <!-- load content dynamically from here -->
+            <div class="activity__2__body">
+              
+              
+              <!-- break -->
+              
+              <% if(data?.courses_teaching?.length === 0) { %>
+                <div class="activity__2__content">
+                  <div class="content_group">  
+                    <div class="content__sub__group">
+                      <div class="content__owner__info">
+                        <h3> <i class="fa-regular fa-face-frown fa-lg"></i> Currently teaching no courses ...</h3>
+                      </div>
+                      <div class="content__body">
+                       
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <% }else{ %>
+
+                <% data?.courses_teaching?.forEach(item =>{ %>
+                  <div class="activity__2__content">
+                    <div class="content_group">
+                      <div class="content__owner__img">
+                        <span class="material-icons-sharp md-48">auto_stories</span>
+                      </div>
+                      <div class="content__sub__group">
+                        <div class="content__owner__info">
+                          <h3><%= item?.course_name %></h3>
+                        </div>
+                        <div class="content__body">
+                          <h3>Course code: <%= item?.course_code %></h3>
+                        </div>
+                        
+                      </div>
+                    </div>
+                  </div>
+                <% }) %>
+
+              <% } %>  
+
+
+              
+            </div>
+          </div>
+            
+        </div>
+        
+
+
+      </div>
+
+      <div class="custom__modal__wrapper">
+        <div class = "custom__modal__body">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Modal title</h5>
+              <button type="button" class="close custom__close__btn" data-dismiss="modal" aria-label="Close">
+                <span class="material-icons-sharp">
+                  close
+                  </span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p class = "modal-body-text">Modal body text goes here.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    
+
+
+
+
+  </div>
+  <script src = "/dev_v2/Profile_teacher/scripts.js"></script>
+</body>
+
+</html>

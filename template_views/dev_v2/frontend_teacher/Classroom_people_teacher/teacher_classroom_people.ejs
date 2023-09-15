@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="csrf-token" content = "<%= data?.CSRF_TOKEN %>">
+
+  <title>Classroom_LMS</title>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+  <script defer src="https://use.fontawesome.com/releases/v6.1.1/js/all.js" integrity="sha384-xBXmu0dk1bEoiwd71wOonQLyH+VpgR1XcDH3rtxrLww5ajNTuMvBdL5SOiFZnNdp" crossorigin="anonymous"></script>
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+  <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  <script  src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" href="/dev_v2/Classroom_people_teacher/styles.css">
+
+</head>
+<body>
+  
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+      <header class="mdl-layout__header mdl__custom__prop__header">
+        <div class="mdl-layout__header-row">
+          <!-- Title -->
+          <span class="mdl-layout-title"><%= data?.class_room_info[0]?.class_name %></span>
+          <!-- Add spacer, to align navigation to the right -->
+          <div class="mdl-layout-spacer"></div>
+          <!-- Navigation. We hide it in small screens. -->
+          <nav class="mdl-navigation mdl-layout--large-screen-only">
+            <a class="mdl-navigation__link" href="/development/teacher/classroom/<%= data?.class_room_info[0]?.class_room_id%>">Stream</a>
+            <a class="mdl-navigation__link" href="/development/teacher/classroom/<%= data?.class_room_info[0]?.class_room_id%>/people">People</a>
+          </nav>
+        </div>
+      </header>
+      <div class="mdl-layout__drawer">
+        <span class="mdl-layout-title">Classroom</span>
+        <nav class="mdl-navigation">
+          <a class="mdl-navigation__link mdl__nav__drawer__item" href="/development/teacher/classroom/<%= data?.class_room_info[0]?.class_room_id%>">Stream</a>
+          <a class="mdl-navigation__link mdl__nav__drawer__item" href="/development/teacher/classroom/<%= data?.class_room_info[0]?.class_room_id%>/people">People</a>
+          <a class="mdl-navigation__link mdl__nav__drawer__item" href="/development/teacher/home">Home</a>
+          <a class="mdl-navigation__link mdl__nav__drawer__item logout__btn__classroom" href="">logout</a>
+        </nav>
+      </div>
+
+      <main class="mdl-layout__content">
+        <div class="classroom__container">
+          <!-- grid row 1 take full 12 cells -->
+          <div class="classroom__banner">
+            <!-- fetch classroom info -->
+            <div class="banner__info">
+              <div class="">
+                <h1 class = "banner__item"><%= data?.class_room_info[0]?.course_name %></h1>
+                <h2 class = "banner__item"><%= data?.class_room_info[0]?.class_name %></h2>
+                <h2 class = "banner__item">Instructor: <%= data?.teacher_info[0]?.fname %> <%= data?.teacher_info[0]?.lname %></h2>
+              </div>
+            </div>
+          </div>
+          <!-- row 2 take 2 cells -->
+      
+          <div class="classroom__body">
+            <div class="classroom__side__bar__container">
+              <div class="classroom__side__bar">
+                <div class="classroom__side__bar__header">
+                  <h3>User Information</h3>
+                </div>
+                <div class="classroom__side__bar__body">
+      
+                  <div class="card card__custom ">
+                    <div class="card-body">
+                      <!-- <h3 class="card-title">Special title treatment</h3> -->
+                      <div class="card__contents">
+                        <div class="card__content__group">
+                          <div class="content__owner__img">
+                            <img src="/_static_/<%= data?.teacher_info[0]?.dp_path %>" style="width:50px; height:50px; border-radius: 50%;">
+                          </div>
+                          <div class="content__sub__group">
+                            <div class="content__owner__info">
+                              <i class="fa-solid fa-at"></i><i><b> <%= data?.teacher_info[0]?.fname %> <%= data?.teacher_info[0]?.lname %></b></i>
+                            </div>
+                            <div class="content__body">
+                              <p class="card-text">Role: Teacher</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card__btn">
+                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect teacher__remove__class__btn" data_c_r_id = "<%= data?.class_room_info[0]?.class_room_id %>">
+                          remove class
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+      
+                </div>
+              </div>
+            </div>
+      
+      
+            <!-- row 2 take 10 cells -->
+            <div class="classroom__data__container">
+              <div class="classroom__data">
+      
+                <!-- post starts -->
+                
+                <div class="post__container">
+                  <div class="post__header">
+                    
+                    <h3>Classroom Information</h3>
+                    
+                  </div>
+                  <div class="post__body">
+                    <div class="post__body__content">
+                      <div class="teacher__info">
+                        <div class="item__info__header">
+                          <h2>Teachers</h2>
+                        </div>
+                        <div class="item__info__body">
+                          <div class="item__img">
+                            <img src="/_static_/<%= data?.teacher_info[0]?.dp_path %>" style="width:40px; height:40px; border-radius: 50%;">
+                          </div>
+                          <div class="item__group">
+                            <div class="item__info__1">
+                              <b><%= data?.teacher_info[0].fname %> <%= data?.teacher_info[0].lname %>* (You)</b>
+                            </div>
+                            <div class="item__info__2">
+                              <p><b><%= data?.teacher_info[0].email %></b></p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="student__info">
+                        <div class="item__info__header">
+                          <div class="header_wrapper">
+                            <h2>Students</h2>
+                            <%
+                              let students = 0
+                              data?.class_room_students?.forEach(item => {students++});
+                            %>
+                            <h4><%= students %> students</h4>
+                          </div>
+                        </div>
+
+                        <% if(data?.class_room_students.length === 0) { %> 
+                          <div class="item__info__body info_border">
+                            NO Students .....
+                          </div>
+                        <% }else{ %>
+                          
+                          <% data?.class_room_students.forEach(student =>{ %> 
+                            <div class="item__info__body info_border">
+                              <div class="item__img">
+                                <img src="/_static_/<%= student?.dp_path %>" style="width:40px; height:40px; border-radius: 50%;">
+                              </div>
+                              <div class="item__group">
+                                <div class="item__info__1">
+                                  <b><%= student?.fname %> <%= student?.lname %></b>
+                                </div>
+                                <div class="item__info__2">
+                                  <p><b><%= student?.email %></b></p>
+                                </div>
+                              </div>
+                            </div>  
+                          <% }) %>
+                          
+                        <% } %>
+                      </div>
+                    </div>
+                    
+                    
+                  </div>
+                 
+            
+                </div>
+                
+                
+
+      
+              </div>
+      
+            </div>
+      
+      
+          </div>
+      
+      
+        </div>
+
+        
+
+      </main>
+
+    </div>
+    <div class="custom__modal__wrapper">
+      <div class = "custom__modal__body">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title">Modal title</h3>
+            <button type="button" class="close custom__close__btn" data-dismiss="modal" aria-label="Close">
+              <span class="material-icons-sharp">
+                close
+                </span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <h4 class = "modal-body-text">Modal body text goes here.</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  <script src = "/dev_v2/Classroom_people_teacher/scripts.js"></script>
+</body>
+</html>

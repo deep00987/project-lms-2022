@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name = "csrf-token" content = "<%= data?.CSRF_TOKEN %>">
+  <title>Document</title>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="https://use.fontawesome.com/04e9a198a1.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="/staff/css/techer_login_style.css">
+
+
+</head>
+<body>
+    <section class="myform-area">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <div class="form-area login-form">
+              <div class="form-content">
+                <h2>Learning Management System</h2>
+                <p>Log into the Teacher's platorm to get started. Or, Register into our platform.</p>
+    
+                <div class="myform-button">
+                  <button class="myform-btn-register">Register</button>
+                </div>
+    
+              </div>
+              <div class="form-input">
+                <h2>Teacher Login</h2>
+                <form method = "POST" action = "/process_v2_login_teacher">
+                  <div class="form-group">
+                    <input type="hidden" name="_csrf" value="<%= data?.CSRF_TOKEN %>">
+                    <input type="text" id="form__username" name="email" required>
+                    <label>Teacher's Email</label>
+                  </div>
+                  <div class="form-group">
+                    <input type="password" id="form__pass" name="password" required>
+                    <label>password</label>
+                  </div>
+                  <div class="myform-button">
+                    <button class="myform-btn" type = "submit" >Login</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+  <script>
+
+   
+    const reg_btn = document.querySelector('.myform-btn-register')
+
+    reg_btn.addEventListener('click', goToRegister.bind())
+
+    function goToRegister(e) {
+      console.log(e)
+      window.location.href = '/staff/register'
+    }
+
+
+  </script>
+
+
+</body>
+</html>

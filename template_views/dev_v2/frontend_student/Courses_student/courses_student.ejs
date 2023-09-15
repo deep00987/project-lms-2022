@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp">
+  <meta name="csrf-token" content="<%= data?.CSRF_TOKEN %>">
+  <link rel="stylesheet" href="/dev_v2/Courses_student/style.css">
+  <title>Document</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+  <script defer src="https://use.fontawesome.com/releases/v6.1.1/js/all.js" integrity="sha384-xBXmu0dk1bEoiwd71wOonQLyH+VpgR1XcDH3rtxrLww5ajNTuMvBdL5SOiFZnNdp" crossorigin="anonymous"></script>
+  
+</head>
+
+<body>
+  <header class="site__header">
+    
+  </header>
+
+  
+  <%
+    const dept = {
+      "CS": "Computer Science",
+      "MATH": "MATHAMETICS",
+    }
+  %>
+  <div class="dashboard__container">
+    <div class = "sidebar__wrapper">
+      <sidebar class="sidebar-menu">
+        <!-- top logo -->
+        <div class="top">
+          <div class="logo">
+            <!-- <img src="./img/img_avatar.png" alt="loading"> -->
+            <h2>LMS<span class="logo-name"> Application</span></h2>
+          </div>
+          
+        </div>
+
+        <div class="top">
+          <div class="logo">
+            <img src="/_static_/<%= data?.student_info[0]?.dp_path %>" alt="loading">
+            <!-- <h2>FIM<span class="logo-name">whatever</span></h2> -->
+          </div>
+          <div class="profile_info">
+            <h5><%= data?.student_info[0]?.fname %> <%= data?.student_info[0]?.lname %></h5>
+          </div>
+        </div>
+
+        <div class="sidebar">
+          <a href="/development/student/home" class="active">
+            <span class="material-icons-sharp">home</span>
+            <h3>Dashboard</h3>
+          </a>
+          <a href="/development/student/classes">
+            <span class="material-icons-sharp">class</span>
+            <h3>Classes</h3>
+          </a>
+          <a href="/development/student/courses">
+            <span class="material-icons-sharp">auto_stories</span>
+            <h3>Courses</h3>
+          </a>
+          <a href="/development/student/addmission">
+            <span class="material-icons-sharp">add_circle</span>
+            <h3>Addmission</h3>
+          </a>
+          <a href="/development/student/profile">
+            <span class="material-icons-sharp">person_pin</span>
+            <h3>Profile</h3>
+          </a>
+          <a href="#" class = "logout__btn">
+            <span class="material-icons-sharp">logout</span>
+            <h3>Logout</h3>
+          </a>
+        </div>
+      </sidebar>
+    </div>  
+
+    <main>
+      <!--<h2>header test 1</h2>-->
+
+      <div class="insights">
+        <div class="insight-1">
+          <div class="icon__content">
+            <span class="material-icons-sharp">account_circle</span>
+          </div>
+          <div class="middle">
+            <div class="left">
+              <!-- user name -->
+              <h2><%= data?.student_info[0]?.fname %> <%= data?.student_info[0]?.lname %></h2>
+              <!-- user eamil -->
+              <h3><%= data?.student_info[0]?.email %></h3>
+              <!-- dept name  -->
+            </div>
+          </div>
+        </div>
+
+        <div class="insight-2">
+          <div class="icon__content">
+            <span class="material-icons-sharp">school</span>
+          </div>
+          <div class="middle">
+            <div class="left">
+              <!-- department info -->
+              <h2><%= dept[data?.student_info[0]?.dept_name] %></h2>
+              <h2><%= data?.student_info[0]?.term_name %></h2>
+            </div>
+          </div>
+        </div>
+
+        <div class="insight-3">
+          <div class="icon__content">
+            <span class="material-icons-sharp">auto_stories</span>
+          </div>
+          <div class="middle">
+            <div class="left">
+              <div class="card__content__1"> 
+                <h2>Courses joined<i class="fa-solid fa-caret-right"></i></h2>
+                <%
+                  let joined_courses = 0; 
+                  data?.courses_enrolled?.forEach(item => {joined_courses++})
+                %>
+                <h2><%= joined_courses %></h2>                 
+              </div>
+              <h3>You have enrolled in <%= joined_courses %> courses</h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="insight-4">
+          <div class="icon__content">
+            <span class="material-icons-sharp">event_note</span>
+          </div>
+          <div class="middle">
+            <div class="left">
+              <div class="card__content__1"> 
+                <%
+                  let joined_classes = 0; 
+                  data?.class_rooms_joined?.forEach(item => {joined_classes++})
+                %> 
+                <h2>Classes joined<i class="fa-solid fa-caret-right"></i></h2>
+                <h2><%= joined_classes %></h2>                              
+              </div>
+              <h3>You have enrolled in <%= joined_classes %> classes</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="activities">
+        <!--<h2>Activities</h2>-->
+        <div class="activity__1">
+          <div class="activity__1__header">
+            <h5>Courses available to enroll</h5>
+          </div>
+          
+          <div class="activity__1__body">
+            <div class="table-responsive ">
+              <table class="table table-bordered align-middle">
+            
+                <thead>
+                  <tr>
+                    <th scope="col">Course ID</th>
+                    <th scope="col">Course Name</th>
+                    <th scope="col">Course code</th>
+                    <th scope="col">Enroll</th>
+                    <th scope="col">Leave</th>
+                    <th scope="col">Status</th>
+                  </tr>
+                </thead>
+                <tbody class = "course__data__parent">
+
+                  <% data?.available_courses.forEach(item =>{ %>
+
+                    <tr class = "course__data__row" data-id = "<%= item?.course_id %>">
+                      <th scope="row"><%= item?.course_id %></th>
+                      <td><%= item?.course_name %></td>
+                      <td><%= item?.course_code %></td>
+                      
+                      <td><button type="button" class="btn-custom btn btn-primary btn-sm course__enroll__btn">Enroll</button></td>
+                      <td><button type="button" class="btn-custom btn btn-primary btn-sm course__optout__btn">Leave</button></td>
+
+                      <% let flag = false %>
+                      <% data?.courses_enrolled?.forEach(obj => { %>
+                        <% if(obj?.course_id === item?.course_id) {flag = true} %>
+                      <% }) %>
+                      <% if(flag) { %>
+                        <td><div class = "course__table__status status_success">Joined</div></td>
+                      <% }else{ %>
+                        <td><div class = "course__table__status status_warning">Not joined</div></td>
+                      <% } %>                        
+                    </tr>
+                  
+                  <% }) %>
+
+                     
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+          
+        </div>
+        <div class="activity__2">
+          <div class="activity__2__wrapper">
+            <div class="activity__2__header">
+              <h5>Courses joined</h5>
+            </div>
+            <div class="activity__2__body">
+              <!-- load content dynamically from here -->
+              
+    
+              <% if(data?.courses_enrolled?.length === 0) { %>
+                <div class="activity__2__content">
+                  <div class="content_group">  
+                    <div class="content__sub__group">
+                      <div class="content__owner__info">
+                        <h3> <i class="fa-regular fa-face-frown fa-lg"></i> No courses joined ...</h3>
+                      </div>
+                      <div class="content__body">
+                       
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <% }else{ %>
+
+                <% data?.courses_enrolled?.forEach(item =>{ %>
+                  <div class="activity__2__content">
+                    <div class="content_group">
+                      <div class="content__owner__img">
+                        <span class="material-icons-sharp md-48">auto_stories</span>
+                      </div>
+                      <div class="content__sub__group">
+                        <div class="content__owner__info">
+                          <h3><%= item?.course_name %></h3>
+                        </div>
+                        <div class="content__body">
+                          <h3><%= item?.course_code %></h3>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <% }) %>
+
+              <% } %>  
+              
+              <!-- break -->
+              
+              
+                
+            </div>
+          </div>
+            
+        </div>
+
+      </div>
+      <div class="custom__modal__wrapper">
+        <div class = "custom__modal__body">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Test Placeholder</h5>
+              <button type="button" class="close custom__close__btn" data-dismiss="modal" aria-label="Close">
+                <span class="material-icons-sharp">
+                  close
+                  </span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p class = "modal-body-text">Test placeholder.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+
+    </main>
+    
+    
+
+  </div>
+  
+  
+
+  <script>
+    const course_data_parent = document.querySelector(".course__data__parent")
+    const modal_close_btn = document.querySelector(".custom__close__btn")
+    const modal_wrapper = document.querySelector(".custom__modal__wrapper")
+
+    course_data_parent.addEventListener('click', processCourseInput.bind())
+    modal_close_btn.addEventListener("click", processModalClose.bind())
+    modal_wrapper.addEventListener("click", processModalClose.bind())
+    const CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+
+    function processCourseInput(e){
+      e.preventDefault()
+      //console.log(e.target.closest(".course__data__row").getAttribute("data-id"))
+
+      if(e.target.classList.contains("course__enroll__btn")){
+        const course_id = +e.target.closest(".course__data__row").getAttribute("data-id")
+        console.log(course_id)
+        const data = {course_id : course_id}
+        fetch("/api/courses/enroll", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+            'CSRF-Token': CSRF_TOKEN,
+            
+          },
+          body: JSON.stringify(data)
+        }).then(response => response.json())
+          .then(data => {
+            console.log(data)
+            //alert(data.msg)
+            let header = (data?.success === 1)?`Action Successful`: `Action Unsuccessful`
+            let msg =  (data?.success === 1)?`Enrolled in the course successfully!`: data?.msg
+            const result = {
+              "header": header,
+              "msg": msg
+            }
+            processModalOpen(result)
+          })
+      }
+
+      if(e.target.classList.contains("course__optout__btn")){
+        const course_id = +e.target.closest(".course__data__row").getAttribute("data-id")
+        console.log(course_id)
+
+        const data = {course_id : course_id}
+        fetch("/api/courses/opt_out", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+            'CSRF-Token': CSRF_TOKEN,
+            
+          },
+          body: JSON.stringify(data)
+        }).then(response => response.json())
+          .then(data => {
+            console.log(data)
+            //alert(data.msg)
+            let header = (data?.success === 1)?`Action Successful`: `Action Unsuccessful`
+            let msg =  (data?.success === 1)?`Course left successfully!`: data?.msg
+            const result = {
+              "header": header,
+              "msg": msg
+            }
+            processModalOpen(result)
+          })
+      }
+
+    }
+
+    async function processModalClose(){
+      await document.querySelector(".custom__modal__wrapper").classList.remove('modal__active')
+      await document.querySelector(".custom__modal__body").classList.remove('modal__animation')
+      setTimeout(()=>{
+        window.location.href = ''
+      }, 100);
+    }
+
+    function processModalOpen(data){
+      document.querySelector(".modal-title").textContent = data?.header
+      document.querySelector(".modal-body-text").textContent = data?.msg
+      document.querySelector(".custom__modal__wrapper").classList.add('modal__active')
+      document.querySelector(".custom__modal__body").classList.add('modal__animation')
+    }
+
+    const logout__btn = document.querySelector(".logout__btn")
+    logout__btn.addEventListener("click", processLogout.bind())
+
+    function processLogout(e){
+      console.log(e.target)
+
+      fetch("/api/auth/logout")
+      .then(response=>response.json())
+      .then(data=>{
+        console.log(data)
+        window.location.href = "/login"
+      })
+
+
+    }
+
+    
+  </script>
+</body>
+
+</html>   
